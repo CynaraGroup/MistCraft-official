@@ -57,13 +57,13 @@ export type CynaraConfig = {
 
 const defaultConfig: CynaraConfig = {
   site: {
-    name: 'Cynara',
-    url: 'https://cynara.my',
+    name: 'MistCraft',
+    url: 'https://mistcraft.com',
     description: {
-      zh: 'Cynara 官方网站，展示产品、伙伴、专栏与团队动态。',
-      en: 'Cynara official website featuring products, partners, articles, and team updates.',
+      zh: 'MistCraft 官方网站，展示产品、伙伴、专栏与团队动态。',
+      en: 'MistCraft official website featuring products, partners, articles, and team updates.',
     },
-    keywords: ['Cynara', 'CynaraGroup', 'Tech', 'WebDev'],
+    keywords: ['MistCraft', 'Tech', 'WebDev'],
     defaultImage: 'https://i.mahiro.work/i/2026/05/02/11c1trl.svg',
     logo: 'https://i.mahiro.work/i/2026/05/02/11c1trl.svg',
   },
