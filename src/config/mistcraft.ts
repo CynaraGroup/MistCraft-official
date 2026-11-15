@@ -98,7 +98,7 @@ const defaultConfig: MistCraftConfig = {
   external: {
     contactEmail: 'mhya123@mail.mistcraft.cn',
     hiringEmail: 'mhya123@mail.mistcraft.cn',
-    sponsorUrl: 'https://ifdian.net/a/cynara',
+    sponsorUrl: 'https://payment.mahiro.work/sponsor?referra=MistCraft-WebSite',
     bilibiliUrl: 'https://space.bilibili.com/3706979616819218',
     douyinUrl: 'https://v.douyin.com/J2-5jsN9okk/',
   },
