@@ -3,7 +3,7 @@ import Header from '../components/Header.astro';
 import '../styles/global.css';
 import 'katex/dist/katex.min.css';
 import { defaultLocale, type Locale } from '../i18n';
-import { cynaraConfig } from '../config/cynara';
+import { mistcraftConfig } from '../config/mistcraft';
 import { ViewTransitions } from 'astro:transitions';
 
 interface Props {
@@ -19,16 +19,16 @@ const {
   title,
   lang = defaultLocale,
   showVideoBackground = false,
-  description = cynaraConfig.site.description[lang],
-  image = cynaraConfig.site.defaultImage,
+  description = mistcraftConfig.site.description[lang],
+  image = mistcraftConfig.site.defaultImage,
   noindex = false,
 } = Astro.props;
 
-const siteUrl = Astro.site ?? new URL(cynaraConfig.site.url);
+const siteUrl = Astro.site ?? new URL(mistcraftConfig.site.url);
 const canonicalUrl = new URL(Astro.url.pathname + Astro.url.search, siteUrl).toString();
 const ogImageUrl = new URL(image, siteUrl).toString();
-const pageTitle = `${title} | ${cynaraConfig.site.name}`;
-const keywords = cynaraConfig.site.keywords.join(', ');
+const pageTitle = `${title} | ${mistcraftConfig.site.name}`;
+const keywords = mistcraftConfig.site.keywords.join(', ');
 ---
 
 <!DOCTYPE html>
@@ -44,7 +44,7 @@ const keywords = cynaraConfig.site.keywords.join(', ');
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:site_name" content={cynaraConfig.site.name} />
+    <meta property="og:site_name" content={mistcraftConfig.site.name} />
     <meta property="og:image" content={ogImageUrl} />
     <meta property="og:locale" content={lang === 'zh' ? 'zh_CN' : 'en_US'} />
     <meta name="twitter:card" content="summary_large_image" />
@@ -55,7 +55,7 @@ const keywords = cynaraConfig.site.keywords.join(', ');
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#0f172a" />
-    <link rel="alternate" type="application/rss+xml" title={`${cynaraConfig.site.name} RSS`} href="/rss.xml" />
+    <link rel="alternate" type="application/rss+xml" title={`${mistcraftConfig.site.name} RSS`} href="/rss.xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -65,109 +65,17 @@ const keywords = cynaraConfig.site.keywords.join(', ');
     {showVideoBackground && (
       <>
         <div class="site-background-fallback fixed inset-0 z-0 bg-gradient-to-br from-[#0a0e1a] via-[#0d1117] to-[#0a0a12]" transition:persist="bgGradient"></div>
-        <video
-          id="bgVideo"
-          class="site-background-video fixed inset-0 w-full h-full object-cover z-0 transition-opacity duration-1000 opacity-0"
-          autoplay
-          muted
-          loop
-          playsinline
-          crossorigin="anonymous"
-          transition:persist="bgVideo"
-        >
-        </video>
-        <div class="site-background-overlay fixed inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70 z-0" transition:persist="bgOverlay"></div>
-
-        <script is:inline define:vars={{ videoUrl: cynaraConfig.assets.backgroundVideo, videoCacheName: cynaraConfig.assets.videoCacheName }}>
-          (function loadBgVideo() {
-            var video = document.getElementById('bgVideo');
-            if (!video) return;
-
-            function revealVideo() {
-              video.classList.remove('opacity-0');
-              video.dataset.loaded = '1';
-              window.__bgVideoLoading = false;
-            }
-
-            function markVideoFailed() {
-              document.documentElement.classList.add('bg-video-failed');
-              window.__bgVideoLoading = false;
-            }
-
-            function tryPlay() {
-              try {
-                var playResult = video.play();
-                if (playResult && typeof playResult.catch === 'function') {
-                  playResult.catch(function() {});
-                }
-              } catch (error) {}
-            }
-
-            if (video.readyState >= 2 || (video.currentTime > 0 && !video.paused)) {
-              revealVideo();
-              tryPlay();
-              return;
-            }
-
-            if (video.dataset.loaded === '1' && video.src) {
-              revealVideo();
-              tryPlay();
-              return;
-            }
-
-            if (window.__bgVideoLoading) return;
-            window.__bgVideoLoading = true;
-
-            var conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-            if (conn && (conn.saveData || conn.effectiveType === 'slow-2g' || conn.effectiveType === '2g')) {
-              markVideoFailed();
-              return;
-            }
-
-            video.addEventListener('loadeddata', function() {
-              revealVideo();
-              tryPlay();
-            }, { once: true });
-            video.addEventListener('canplay', function() {
-              revealVideo();
-              tryPlay();
-            }, { once: true });
-            video.addEventListener('playing', revealVideo, { once: true });
-            video.addEventListener('error', markVideoFailed, { once: true });
-
-            if (video.src && video.src !== window.location.href) {
-              video.load();
-              tryPlay();
-              return;
-            }
-
-            if (typeof caches !== 'undefined') {
-              caches.open(videoCacheName).then(function(cache) {
-                return cache.match(videoUrl).then(function(cached) {
-                  if (cached && cached.ok) return cached;
-                  return fetch(videoUrl, { referrerPolicy: 'no-referrer' }).then(function(res) {
-                    if (res.ok) cache.put(videoUrl, res.clone());
-                    return res;
-                  });
-                });
-              }).then(function(response) {
-                if (response && response.ok) {
-                  return response.blob().then(function(blob) {
-                    video.src = URL.createObjectURL(blob);
-                    tryPlay();
-                  });
-                }
-                throw new Error('bad response');
-              }).catch(function() {
-                video.src = videoUrl;
-                tryPlay();
-              });
-            } else {
-              video.src = videoUrl;
-              tryPlay();
-            }
-          })();
-        </script>
+        <img
+          src={mistcraftConfig.assets.backgroundImage}
+          alt=""
+          aria-hidden="true"
+          width="1920"
+          height="1080"
+          fetchpriority="high"
+          class="site-background-image pointer-events-none fixed inset-0 h-full w-full object-cover object-[62%_center] md:object-center z-0"
+          transition:persist="bgImage"
+        />
+        <div class="site-background-overlay pointer-events-none fixed inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70 z-0" transition:persist="bgOverlay"></div>
       </>
     )}
 
@@ -193,8 +101,11 @@ const keywords = cynaraConfig.site.keywords.join(', ');
     <script>
       import gsap from 'gsap';
       import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
+      import { restoreHomeSectionPosition } from '../scripts/homeSectionPosition';
 
       gsap.registerPlugin(ScrollToPlugin);
+      // Position the nested home scroller before the new view-transition snapshot.
+      document.addEventListener('astro:after-swap', restoreHomeSectionPosition);
 
       function initBackToTop() {
         const scrollContainer = document.querySelector<HTMLElement>('.app-scroll');

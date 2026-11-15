@@ -2,7 +2,7 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { t, getLocalizedUrl } from '../../i18n';
-import { cynaraConfig } from '../../config/cynara';
+import { mistcraftConfig } from '../../config/mistcraft';
 
 interface Props {
   entry: CollectionEntry<'articles'>;
@@ -12,7 +12,7 @@ interface Props {
 const { entry, lang } = Astro.props;
 const { Content, headings, remarkPluginFrontmatter } = await entry.render();
 const readingTimeMinutes: number = remarkPluginFrontmatter.readingTimeMinutes ?? 1;
-const tocHeadings = cynaraConfig.articles.toc.enabled
+const tocHeadings = mistcraftConfig.articles.toc.enabled
   ? headings.filter((heading) => heading.depth >= 2 && heading.depth <= 3)
   : [];
 
@@ -44,18 +44,18 @@ const articleJsonLd = {
   datePublished: entry.data.pubDate.toISOString(),
   author: entry.data.author
     ? { '@type': 'Person', name: entry.data.author }
-    : { '@type': 'Organization', name: cynaraConfig.site.name },
+    : { '@type': 'Organization', name: mistcraftConfig.site.name },
   publisher: {
     '@type': 'Organization',
-    name: cynaraConfig.site.name,
-    url: cynaraConfig.site.url,
-    logo: { '@type': 'ImageObject', url: cynaraConfig.site.logo },
+    name: mistcraftConfig.site.name,
+    url: mistcraftConfig.site.url,
+    logo: { '@type': 'ImageObject', url: new URL(mistcraftConfig.site.logo, mistcraftConfig.site.url).toString() },
   },
   mainEntityOfPage: {
     '@type': 'WebPage',
-    '@id': `${cynaraConfig.site.url}/articles/${entry.slug}/`,
+    '@id': `${mistcraftConfig.site.url}/articles/${entry.slug}/`,
   },
-  image: cynaraConfig.site.defaultImage,
+  image: new URL(mistcraftConfig.site.defaultImage, mistcraftConfig.site.url).toString(),
   keywords: currentTags.join(', '),
   wordCount: Math.round(readingTimeMinutes * 200),
 };
@@ -65,7 +65,7 @@ const articleJsonLd = {
   title={`${entry.data.title} - ${t(lang, 'nav.articles')}`}
   lang={lang}
   showVideoBackground={true}
-  description={entry.data.description ?? (lang === 'zh' ? '阅读 Cynara 的最新文章内容。' : 'Read the latest article from Cynara.')}
+  description={entry.data.description ?? (lang === 'zh' ? '阅读 MistCraft 的最新文章内容。' : 'Read the latest article from MistCraft.')}
 >
   <!-- JSON-LD Structured Data -->
   <script type="application/ld+json" set:html={JSON.stringify(articleJsonLd)} />
@@ -200,7 +200,7 @@ const articleJsonLd = {
           </div>
         )}
 
-        <a href={getLocalizedUrl(cynaraConfig.routes.articles, lang)} class="btn btn-ghost justify-start gap-2 px-0 text-gray-400 hover:bg-transparent hover:text-white">
+        <a href={getLocalizedUrl(mistcraftConfig.routes.articles, lang)} class="btn btn-ghost justify-start gap-2 px-0 text-gray-400 hover:bg-transparent hover:text-white">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
@@ -236,7 +236,7 @@ const articleJsonLd = {
     </>
   )}
 
-  <script is:inline define:vars={{ tocScrollOffset: cynaraConfig.articles.toc.scrollOffset }}>
+  <script is:inline define:vars={{ tocScrollOffset: mistcraftConfig.articles.toc.scrollOffset }}>
     window.articleTocScrollOffset = tocScrollOffset;
   </script>
 

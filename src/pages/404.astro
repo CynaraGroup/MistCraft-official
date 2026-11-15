@@ -1,10 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getLocaleFromUrl } from '../i18n';
-import { cynaraConfig } from '../config/cynara';
+import { mistcraftConfig } from '../config/mistcraft';
 
 const lang = getLocaleFromUrl(Astro.url);
-const homeRoute = cynaraConfig.routes.home;
+const homeRoute = mistcraftConfig.routes.home;
 ---
 
 <BaseLayout

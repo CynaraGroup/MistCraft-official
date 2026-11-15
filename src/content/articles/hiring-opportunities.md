@@ -1,17 +1,17 @@
 ---
 title: "招聘信息：让伟大的想法在此相遇"
-description: "Cynara 团队的岗位说明、职责要求与简历投递方式。"
+description: "MistCraft 团队的岗位说明、职责要求与简历投递方式。"
 pubDate: 2025-07-07
-author: "Cynara Team"
+author: "MistCraft Team"
 tags: ["Hiring", "Recruitment", "Team"]
 draft: true
 ---
 
-> Cynara 是一个非营利性质的工作室，因此目前无法提供常规意义上的劳动报酬。
+> MistCraft 是一个非营利性质的工作室，因此目前无法提供常规意义上的劳动报酬。
 
 # Let's Shine Brighter Together.
 
-Cynara 希望持续创作有内容、有表达、也有长期价值的作品。如果你认同这样的方向，欢迎了解我们的岗位需求。
+MistCraft 希望持续创作有内容、有表达、也有长期价值的作品。如果你认同这样的方向，欢迎了解我们的岗位需求。
 
 ## 空缺岗位
 
@@ -92,7 +92,7 @@ Cynara 希望持续创作有内容、有表达、也有长期价值的作品。�
 
 ## 简历投递
 
-请将简历发送至：`sorasaku@cynara.my`
+请将简历发送至：`mhya123@mail.mistcraft.cn`
 
 建议邮件中包含以下信息：
 
@@ -105,4 +105,4 @@ Cynara 希望持续创作有内容、有表达、也有长期价值的作品。�
 7. 自我评价
 8. 附件简历
 
-如果你对以上岗位感兴趣，也认同 Cynara 的创作方向，欢迎来信。
+如果你对以上岗位感兴趣，也认同 MistCraft 的创作方向，欢迎来信。

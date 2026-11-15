@@ -1,14 +1,14 @@
 ---
 import { t, type Locale, getLocalizedUrl } from '../i18n';
-import { cynaraConfig } from '../config/cynara';
+import { mistcraftConfig } from '../config/mistcraft';
 
 interface Props {
   lang: Locale;
 }
 
 const { lang } = Astro.props;
-const homeRoute = getLocalizedUrl(cynaraConfig.routes.home, lang);
-const articlesRoute = getLocalizedUrl(cynaraConfig.routes.articles, lang);
+const homeRoute = getLocalizedUrl(mistcraftConfig.routes.home, lang);
+const articlesRoute = getLocalizedUrl(mistcraftConfig.routes.articles, lang);
 const contactRoute = getLocalizedUrl('/contact', lang);
 const targetLang = lang === 'zh' ? 'en' : 'zh';
 const targetLangLabel = lang === 'zh' ? 'EN' : '中文';

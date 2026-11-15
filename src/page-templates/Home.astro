@@ -9,7 +9,7 @@ import HomePartnersSection from '../components/home/HomePartnersSection.astro';
 import HomeArticlesSection from '../components/home/HomeArticlesSection.astro';
 import HomeAboutSection from '../components/home/HomeAboutSection.astro';
 import { t, getLocalizedUrl } from '../i18n';
-import { cynaraConfig } from '../config/cynara';
+import { mistcraftConfig } from '../config/mistcraft';
 import partnersData from '../data/partners.json' assert { type: 'json' };
 import productsZh from '../data/products.zh.json' assert { type: 'json' };
 import productsEn from '../data/products.en.json' assert { type: 'json' };
@@ -24,13 +24,13 @@ const allArticles = await getCollection('articles', ({ data }: any) => {
   return import.meta.env.PROD ? data.draft !== true : true;
 });
 const pinnedArticles = allArticles
-  .filter((article: any) => !cynaraConfig.articles.pinnedOnlyOnHome || article.data.pin === true)
+  .filter((article: any) => !mistcraftConfig.articles.pinnedOnlyOnHome || article.data.pin === true)
   .sort((a: any, b: any) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-  .slice(0, cynaraConfig.home.featuredArticles);
+  .slice(0, mistcraftConfig.home.featuredArticles);
 
 const featuredProductsData = {
-  zh: productsData.zh.slice(0, cynaraConfig.home.featuredProducts),
-  en: productsData.en.slice(0, cynaraConfig.home.featuredProducts),
+  zh: productsData.zh.slice(0, mistcraftConfig.home.featuredProducts),
+  en: productsData.en.slice(0, mistcraftConfig.home.featuredProducts),
 };
 ---
 
@@ -38,7 +38,7 @@ const featuredProductsData = {
   title={t(lang, 'nav.home')}
   lang={lang}
   showVideoBackground={true}
-  description={lang === 'zh' ? 'Cynara 官方网站，展示产品、伙伴、专栏与团队动态。' : 'Cynara official website featuring products, partners, articles, and team updates.'}
+  description={lang === 'zh' ? 'MistCraft 官方网站，展示产品、伙伴、专栏与团队动态。' : 'MistCraft official website featuring products, partners, articles, and team updates.'}
 >
   <div class="fullpage-wrapper" id="fullpageWrapper">
     <section class="fullpage-section" data-index="0" id="section0">
@@ -46,8 +46,8 @@ const featuredProductsData = {
     </section>
 
     <HomeIntroSection lang={lang} />
-    <HomeProductsSection lang={lang} products={productsData} limit={cynaraConfig.home.featuredProducts} productsRoute={getLocalizedUrl(cynaraConfig.routes.products, lang)} />
-    <HomePartnersSection lang={lang} partners={partnersData.partners} limit={cynaraConfig.home.featuredPartners} partnersRoute={getLocalizedUrl(cynaraConfig.routes.partners, lang)} contactEmail={cynaraConfig.external.contactEmail} />
+    <HomeProductsSection lang={lang} products={productsData} limit={mistcraftConfig.home.featuredProducts} productsRoute={getLocalizedUrl(mistcraftConfig.routes.products, lang)} />
+    <HomePartnersSection lang={lang} partners={partnersData.partners} limit={mistcraftConfig.home.featuredPartners} partnersRoute={getLocalizedUrl(mistcraftConfig.routes.partners, lang)} contactEmail={mistcraftConfig.external.contactEmail} />
     <HomeArticlesSection lang={lang} featuredArticles={pinnedArticles} />
     <HomeAboutSection lang={lang} />
   </div>
@@ -228,6 +228,15 @@ const featuredProductsData = {
         });
 
         wrapper.addEventListener('wheel', (e) => {
+          const activeSection = sections[currentIndex];
+          if (activeSection && activeSection.scrollHeight > activeSection.clientHeight + 1) {
+            const canScrollDown = e.deltaY > 0 && activeSection.scrollTop + activeSection.clientHeight < activeSection.scrollHeight - 1;
+            const canScrollUp = e.deltaY < 0 && activeSection.scrollTop > 1;
+            if (canScrollDown || canScrollUp) {
+              return;
+            }
+          }
+
           e.preventDefault();
 
           if (wheelTimeout) {
@@ -253,9 +262,21 @@ const featuredProductsData = {
           }
 
           if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+            const activeSection = sections[currentIndex];
+            if (activeSection && activeSection.scrollTop + activeSection.clientHeight < activeSection.scrollHeight - 1) {
+              e.preventDefault();
+              activeSection.scrollBy({ top: e.key === 'PageDown' ? activeSection.clientHeight * 0.8 : 48, behavior: 'auto' });
+              return;
+            }
             e.preventDefault();
             scrollToSection(currentIndex + 1);
           } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+            const activeSection = sections[currentIndex];
+            if (activeSection && activeSection.scrollTop > 1) {
+              e.preventDefault();
+              activeSection.scrollBy({ top: e.key === 'PageUp' ? -activeSection.clientHeight * 0.8 : -48, behavior: 'auto' });
+              return;
+            }
             e.preventDefault();
             scrollToSection(currentIndex - 1);
           }

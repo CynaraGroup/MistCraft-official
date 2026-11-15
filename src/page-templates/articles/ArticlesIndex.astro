@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { t, getLocalizedUrl } from '../../i18n';
-import { cynaraConfig } from '../../config/cynara';
+import { mistcraftConfig } from '../../config/mistcraft';
 
 interface Props {
   lang: any;
@@ -18,14 +18,14 @@ interface Props {
 }
 
 const { lang, page } = Astro.props;
-const articlesRoute = getLocalizedUrl(cynaraConfig.routes.articles, lang);
+const articlesRoute = getLocalizedUrl(mistcraftConfig.routes.articles, lang);
 ---
 
 <BaseLayout
   title={t(lang, 'nav.articles')}
   lang={lang}
   showVideoBackground={true}
-  description={lang === 'zh' ? '浏览 Cynara 的全部文章、技术内容与最新更新。' : 'Browse all Cynara articles, technical writing, and latest updates.'}
+  description={lang === 'zh' ? '浏览 MistCraft 的全部文章、技术内容与最新更新。' : 'Browse all MistCraft articles, technical writing, and latest updates.'}
 >
   <div class="relative z-10 max-w-4xl mx-auto px-5 py-20 pb-32 md:px-6 md:py-24" id="articlesPage">
     <div class="mb-9 md:mb-12" id="articles-hero">
@@ -130,7 +130,7 @@ const articlesRoute = getLocalizedUrl(cynaraConfig.routes.articles, lang);
     )}
   </div>
 
-  <script is:inline define:vars={{ pagefindLang: lang, pagefindOptions: cynaraConfig.articles.search }}>
+  <script is:inline define:vars={{ pagefindLang: lang, pagefindOptions: mistcraftConfig.articles.search }}>
     window.pagefindLang = pagefindLang;
     window.pagefindOptions = pagefindOptions;
   </script>

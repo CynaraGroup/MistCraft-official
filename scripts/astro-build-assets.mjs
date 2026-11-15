@@ -3,7 +3,7 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { SitemapStream, streamToPromise } from 'sitemap';
-import { cynaraConfig } from './load-cynara-config.mjs';
+import { mistcraftConfig } from './load-mistcraft-config.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -20,7 +20,7 @@ function toFilePath(input) {
 
 function runPagefind(distDir) {
   if (!fs.existsSync(pagefindCli)) {
-    console.warn('[cynara-build] Pagefind CLI was not found. Search index was skipped.');
+    console.warn('[mistcraft-build] Pagefind CLI was not found. Search index was skipped.');
     return;
   }
 
@@ -72,7 +72,7 @@ async function generateSitemap(distDir) {
 
   walk(distDir);
 
-  const sitemap = new SitemapStream({ hostname: cynaraConfig.site.url });
+  const sitemap = new SitemapStream({ hostname: mistcraftConfig.site.url });
   for (const entry of entries) {
     sitemap.write(entry);
   }
@@ -84,7 +84,7 @@ async function generateSitemap(distDir) {
   const sitemapIndex = [
     '<?xml version="1.0" encoding="UTF-8"?>',
     '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
-    `  <sitemap><loc>${cynaraConfig.site.url}/sitemap.xml</loc></sitemap>`,
+    `  <sitemap><loc>${mistcraftConfig.site.url}/sitemap.xml</loc></sitemap>`,
     '</sitemapindex>',
     '',
   ].join('\n');
@@ -92,9 +92,9 @@ async function generateSitemap(distDir) {
   fs.writeFileSync(sitemapIndexPath, sitemapIndex, 'utf8');
 }
 
-export default function cynaraBuildAssets() {
+export default function mistcraftBuildAssets() {
   return {
-    name: 'cynara-build-assets',
+    name: 'mistcraft-build-assets',
     hooks: {
       'astro:build:done': async ({ dir }) => {
         const distDir = toFilePath(dir);

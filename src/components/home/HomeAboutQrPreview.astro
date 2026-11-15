@@ -1,0 +1,176 @@
+---
+import type { Locale } from '../../i18n';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+---
+
+<dialog class="about-qr-preview" aria-labelledby="about-qr-title" aria-describedby="about-qr-hint" data-about-qr-preview>
+  <header class="about-qr-header">
+    <h3 id="about-qr-title" data-about-qr-title>{lang === 'zh' ? '扫码关注' : 'Scan to follow'}</h3>
+    <form method="dialog">
+      <button type="submit" aria-label={lang === 'zh' ? '关闭二维码预览' : 'Close QR preview'} autofocus>×</button>
+    </form>
+  </header>
+  <img src="/assets/images/douyin-qrcode.png" alt="" width="736" height="736" data-about-qr-image />
+  <p data-about-qr-error hidden>{lang === 'zh' ? '图片暂时无法加载，请打开原图查看。' : 'The image could not load. Please open the original.'}</p>
+  <footer class="about-qr-footer">
+    <p id="about-qr-hint">{lang === 'zh' ? '使用对应 App 扫码，或保存图片后识别。' : 'Scan with the app, or save the image to scan later.'}</p>
+    <a href="/assets/images/douyin-qrcode.png" target="_blank" rel="noopener noreferrer" data-about-qr-original>{lang === 'zh' ? '打开原图' : 'Open original'}</a>
+  </footer>
+</dialog>
+
+<style>
+  .about-qr-preview {
+    width: min(30rem, calc(100% - 2rem));
+    max-height: calc(100dvh - 2rem);
+    margin: auto;
+    padding: 1.25rem;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border: 1px solid rgb(215 229 241 / 18%);
+    border-radius: 1.25rem;
+    background: rgb(48 48 48 / 72%);
+    color: #f2f5f7;
+    box-shadow: 0 24px 80px rgb(20 20 20 / 24%);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .about-qr-preview::backdrop {
+    background: rgb(20 20 20 / 38%);
+  }
+
+  .about-qr-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .about-qr-header h3 {
+    margin: 0;
+    color: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.6;
+  }
+
+  .about-qr-header button {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 0.75rem;
+    background: rgb(215 229 241 / 7%);
+    color: #d2d9e2;
+    font-size: 1.5rem;
+    line-height: 1;
+  }
+
+  .about-qr-preview > img {
+    width: 100%;
+    height: auto;
+    border-radius: 0.75rem;
+  }
+
+  .about-qr-footer {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 1rem;
+    color: #d1d5db;
+    font-size: 0.8125rem;
+    line-height: 1.8;
+  }
+
+  .about-qr-footer a {
+    justify-self: start;
+    min-height: 2.75rem;
+    padding-block: 0.625rem;
+    color: #a6d9e8;
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+  }
+
+  .about-qr-header button:hover {
+    background: rgb(215 229 241 / 14%);
+  }
+
+  @media (prefers-reduced-transparency: reduce) {
+    .about-qr-preview {
+      background: #3b3b3b;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+  }
+</style>
+
+<script>
+  function initAboutQrPreview() {
+    const social = document.querySelector<HTMLElement>('[data-about-social]');
+    const dialog = social?.querySelector<HTMLDialogElement>('[data-about-qr-preview]');
+    const image = dialog?.querySelector<HTMLImageElement>('[data-about-qr-image]');
+    const title = dialog?.querySelector<HTMLElement>('[data-about-qr-title]');
+    const original = dialog?.querySelector<HTMLAnchorElement>('[data-about-qr-original]');
+    const errorMessage = dialog?.querySelector<HTMLElement>('[data-about-qr-error]');
+
+    if (!social || !(dialog instanceof HTMLDialogElement) || !image || !title || !original || !errorMessage || social.dataset.qrBound === 'true') {
+      return;
+    }
+
+    social.dataset.qrBound = 'true';
+    social.addEventListener('click', (event) => {
+      if (!(event.target instanceof Element) || event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) {
+        return;
+      }
+
+      const link = event.target.closest<HTMLAnchorElement>('[data-about-qr] a');
+      const sourceImage = link?.querySelector('img');
+      if (!link || !sourceImage || dialog.open) {
+        return;
+      }
+
+      try {
+        image.hidden = false;
+        errorMessage.hidden = true;
+        image.width = sourceImage.naturalWidth || sourceImage.width;
+        image.height = sourceImage.naturalHeight || sourceImage.height;
+        image.alt = sourceImage.alt;
+        image.src = sourceImage.currentSrc || sourceImage.src;
+        title.textContent = sourceImage.alt;
+        original.href = link.href;
+        dialog.showModal();
+        event.preventDefault();
+      } catch (error) {
+        console.error('QR preview error:', error);
+      }
+    });
+
+    image.addEventListener('error', () => {
+      image.hidden = true;
+      errorMessage.hidden = false;
+    });
+
+    dialog.addEventListener('click', (event) => {
+      if (event.target !== dialog) return;
+      const bounds = dialog.getBoundingClientRect();
+      if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) {
+        dialog.close();
+      }
+    });
+
+    dialog.addEventListener('keydown', (event) => event.stopPropagation());
+    dialog.addEventListener('wheel', (event) => event.stopPropagation(), { passive: true });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAboutQrPreview, { once: true });
+  } else {
+    initAboutQrPreview();
+  }
+  document.addEventListener('astro:page-load', initAboutQrPreview);
+</script>

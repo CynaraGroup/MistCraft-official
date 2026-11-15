@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import ArticlesIndex from '../../page-templates/articles/ArticlesIndex.astro';
-import { cynaraConfig } from '../../config/cynara';
+import { mistcraftConfig } from '../../config/mistcraft';
 
 export async function getStaticPaths({ paginate }: any) {
   const allArticles = await getCollection('articles', ({ data }: any) => {
@@ -13,7 +13,7 @@ export async function getStaticPaths({ paginate }: any) {
   );
 
   return paginate(sortedArticles, {
-    pageSize: cynaraConfig.articles.pageSize,
+    pageSize: mistcraftConfig.articles.pageSize,
   });
 }
 

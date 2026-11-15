@@ -1,8 +1,8 @@
 ---
-title: "Cynara 主要成员档案"
+title: "MistCraft 主要成员档案"
 description: "整理自旧内容目录的一份团队成员归档记录。"
 pubDate: 2025-07-06
-author: "Cynara Team"
+author: "MistCraft Team"
 tags: ["Team", "Members", "Archive"]
 ---
 

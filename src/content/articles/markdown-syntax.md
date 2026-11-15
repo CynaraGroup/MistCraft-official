@@ -1,13 +1,13 @@
 ---
 title: "Markdown 完整语法测试与指南"
-description: "欢迎来到 Cynara 的全新博客板块。我们将会在这里持续分享我们的研究、产品动态与开发笔记"
+description: "欢迎来到 MistCraft 的全新博客板块。我们将会在这里持续分享我们的研究、产品动态与开发笔记"
 pubDate: 2026-05-02
-author: "Cynara Team"
+author: "MistCraft Team"
 tags: ["Markdown", "Guide", "Test"]
 pin: true
 ---
 
-## 欢迎访问 Cynara 博客
+## 欢迎访问 MistCraft 博客
 
 这是我们的第一篇文章，也是尝试整合 Markdown 与 MDX 支持的一次演示。
 
@@ -74,14 +74,14 @@ pin: true
 ```javascript
 // JavaScript 示例
 function greet(name) {
-  console.log(`Hello, ${name}! Welcome to Cynara.`);
+  console.log(`Hello, ${name}! Welcome to MistCraft.`);
 }
 greet("World");
 ```
 
 ```css
 /* CSS 示例 */
-.cynara-text {
+.mistcraft-text {
   background: linear-gradient(to right, #3b82f6, #8b5cf6);
   -webkit-background-clip: text;
   color: transparent;
@@ -100,11 +100,11 @@ def fibonacci(n):
 ## 6. 链接与图片 (Links & Images)
 
 ### 链接
-[Cynara 官方网站](https://cynara.com)
+[MistCraft 官方网站](https://cynara.com)
 [带提示(Title)的链接](https://github.com "访问 GitHub")
 
 ### 图片
-![Cynara Logo](https://i.mahiro.work/i/2026/05/02/11c1trl.svg)
+![MistCraft Logo](https://i.mahiro.work/i/2026/05/02/11c1trl.svg)
 
 ---
 

@@ -1,13 +1,14 @@
 ---
 import { t, getLocalizedUrl, type Locale } from '../i18n';
-import { cynaraConfig } from '../config/cynara';
+import { mistcraftConfig } from '../config/mistcraft';
+import WeChatBadge from './WeChatBadge.astro';
 
 interface Props {
   lang: Locale;
 }
 
 const { lang } = Astro.props;
-const homeRoute = getLocalizedUrl(cynaraConfig.routes.home, lang);
+const homeRoute = getLocalizedUrl(mistcraftConfig.routes.home, lang);
 ---
 
 <footer class="mt-24 py-16 border-t border-white/10">
@@ -15,7 +16,7 @@ const homeRoute = getLocalizedUrl(cynaraConfig.routes.home, lang);
     <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
       <div class="md:col-span-2">
         <a href={homeRoute} class="flex items-center gap-3">
-          <img src={cynaraConfig.site.logo} alt={cynaraConfig.site.name} class="h-20 w-20 brightness-200" />
+          <img src={mistcraftConfig.site.logo} alt={mistcraftConfig.site.name} class="h-20 w-20 object-contain" />
         </a>
         <p class="mt-4 text-gray-400 text-sm leading-relaxed max-w-md">
           {t(lang, 'footer.tagline')}
@@ -35,8 +36,11 @@ const homeRoute = getLocalizedUrl(cynaraConfig.routes.home, lang);
       <div>
         <h4 class="text-sm font-medium text-gray-300 mb-4">{t(lang, 'footer.contact')}</h4>
         <ul class="space-y-2 text-sm text-gray-400">
-          <li>{cynaraConfig.external.contactEmail}</li>
+          <li>{mistcraftConfig.external.contactEmail}</li>
         </ul>
+        <div class="mt-4">
+          <WeChatBadge lang={lang} />
+        </div>
       </div>
     </div>
     <div class="mt-12 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">

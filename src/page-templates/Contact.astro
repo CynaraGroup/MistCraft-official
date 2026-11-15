@@ -1,8 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Footer from '../components/Footer.astro';
+import EmailReplyNotice from '../components/EmailReplyNotice.astro';
 import { getLocaleFromUrl, t } from '../i18n';
-import { cynaraConfig } from '../config/cynara';
+import { mistcraftConfig } from '../config/mistcraft';
 
 interface Props { lang: any }
 const { lang } = Astro.props;
@@ -12,7 +13,7 @@ const { lang } = Astro.props;
   title={t(lang, 'nav.contact')}
   lang={lang}
   showVideoBackground={true}
-  description={lang === 'zh' ? '联系 Cynara 团队，了解合作与招聘信息。' : 'Get in touch with the Cynara team for collaboration and hiring.'}
+  description={lang === 'zh' ? '联系 MistCraft 团队，了解合作与招聘信息。' : 'Get in touch with the MistCraft team for collaboration and hiring.'}
 >
   <main class="relative z-10 mx-auto min-h-screen max-w-4xl px-5 py-20 pb-32 md:px-6 md:py-24">
     <div class="mb-9 md:mb-12">
@@ -29,7 +30,7 @@ const { lang } = Astro.props;
     <div class="grid gap-4 md:gap-6 md:grid-cols-2">
       <!-- General Contact -->
       <a
-        href={`mailto:${cynaraConfig.external.contactEmail}`}
+        href={`mailto:${mistcraftConfig.external.contactEmail}`}
         class="glass-card group flex items-start gap-5 rounded-3xl p-6 md:p-8 transition-all duration-300 hover:bg-white/5 hover:scale-[1.02]"
       >
         <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-blue-500/15 border border-blue-400/20 text-blue-300">
@@ -44,13 +45,13 @@ const { lang } = Astro.props;
           <p class="text-sm text-gray-400 mb-3">
             {lang === 'zh' ? '产品咨询、技术支持或合作洽谈' : 'Product inquiries, technical support, or partnerships'}
           </p>
-          <span class="text-sm font-medium text-blue-300/80">{cynaraConfig.external.contactEmail}</span>
+          <span class="text-sm font-medium text-blue-300/80">{mistcraftConfig.external.contactEmail}</span>
         </div>
       </a>
 
       <!-- Hiring -->
       <a
-        href={`mailto:${cynaraConfig.external.hiringEmail}`}
+        href={`mailto:${mistcraftConfig.external.hiringEmail}`}
         class="glass-card group flex items-start gap-5 rounded-3xl p-6 md:p-8 transition-all duration-300 hover:bg-white/5 hover:scale-[1.02]"
       >
         <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-purple-500/15 border border-purple-400/20 text-purple-300">
@@ -65,13 +66,13 @@ const { lang } = Astro.props;
           <p class="text-sm text-gray-400 mb-3">
             {lang === 'zh' ? '加入我们或投递稿件' : 'Join our team or submit your work'}
           </p>
-          <span class="text-sm font-medium text-purple-300/80">{cynaraConfig.external.hiringEmail}</span>
+          <span class="text-sm font-medium text-purple-300/80">{mistcraftConfig.external.hiringEmail}</span>
         </div>
       </a>
 
       <!-- Bilibili -->
       <a
-        href={cynaraConfig.external.douyinUrl}
+        href={mistcraftConfig.external.douyinUrl}
         target="_blank"
         rel="noopener noreferrer"
         class="glass-card group flex items-start gap-5 rounded-3xl p-6 md:p-8 transition-all duration-300 hover:bg-white/5 hover:scale-[1.02]"
@@ -96,7 +97,7 @@ const { lang } = Astro.props;
 
       <!-- Sponsor -->
       <a
-        href={cynaraConfig.external.sponsorUrl}
+        href={mistcraftConfig.external.sponsorUrl}
         target="_blank"
         rel="noopener noreferrer"
         class="glass-card group flex items-start gap-5 rounded-3xl p-6 md:p-8 transition-all duration-300 hover:bg-white/5 hover:scale-[1.02]"
@@ -119,6 +120,7 @@ const { lang } = Astro.props;
         </div>
       </a>
     </div>
+    <EmailReplyNotice lang={lang} />
   </main>
 
   <Footer lang={lang} />

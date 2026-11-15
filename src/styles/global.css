@@ -457,10 +457,6 @@ html {
     radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.34) 82%) !important;
 }
 
-html.bg-video-failed .site-background-video {
-  display: none;
-}
-
 ::selection {
   background: #3b82f6;
   color: white;
@@ -1017,7 +1013,7 @@ html.bg-video-failed .site-background-video {
       radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.26) 78%) !important;
   }
 
-  .site-background-video {
+  .site-background-image {
     min-width: 100vw;
     min-height: 100svh;
   }
@@ -1897,7 +1893,9 @@ a:hover {
   }
 
   #sidebar,
-  #bgVideo,
+  .site-background-fallback,
+  .site-background-image,
+  .site-background-overlay,
   #backToTop,
   #pageDots,
   .article-progress-bar,

@@ -2,7 +2,7 @@
 title: "KaTeX 数学公式测试"
 description: "验证文章页中的行内公式与块级公式是否能通过 KaTeX 正常渲染。"
 pubDate: 2026-05-02
-author: "Cynara Team"
+author: "MistCraft Team"
 tags: ["KaTeX", "Math", "Test"]
 pin: true
 ---

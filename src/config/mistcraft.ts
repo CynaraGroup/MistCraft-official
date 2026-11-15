@@ -7,7 +7,7 @@ export type LocalizedText = {
   en: string;
 };
 
-export type CynaraConfig = {
+export type MistCraftConfig = {
   site: {
     name: string;
     url: string;
@@ -17,9 +17,8 @@ export type CynaraConfig = {
     logo: string;
   };
   assets: {
-    backgroundVideo: string;
+    backgroundImage: string;
     introVideo: string;
-    videoCacheName: string;
   };
   home: {
     featuredProducts: number;
@@ -55,7 +54,7 @@ export type CynaraConfig = {
   };
 };
 
-const defaultConfig: CynaraConfig = {
+const defaultConfig: MistCraftConfig = {
   site: {
     name: 'MistCraft',
     url: 'https://mistcraft.com',
@@ -64,13 +63,12 @@ const defaultConfig: CynaraConfig = {
       en: 'MistCraft official website featuring products, partners, articles, and team updates.',
     },
     keywords: ['MistCraft', 'Tech', 'WebDev'],
-    defaultImage: 'https://i.mahiro.work/i/2026/05/02/11c1trl.svg',
-    logo: 'https://i.mahiro.work/i/2026/05/02/11c1trl.svg',
+    defaultImage: '/assets/images/MistCraft-Line.svg',
+    logo: '/assets/images/MistCraft-Icon.svg',
   },
   assets: {
-    backgroundVideo: 'https://s.mahiro.work/d/cynara-offical/output_min.mp4?sign=zuTiNw1EABHRU3cHhojuSRpHtxwG9XYuz6QwSX6CaAQ=:0',
+    backgroundImage: '/assets/images/site-background.jpg',
     introVideo: 'https://s.mahiro.work/d/cynara-offical/begin.mp4?sign=EV_Zz9Q2oblkZSHcm0E6MI1ugKe9hM3DfCyFocXaekE=:0',
-    videoCacheName: 'cynara-video-cache',
   },
   home: {
     featuredProducts: 5,
@@ -98,8 +96,8 @@ const defaultConfig: CynaraConfig = {
     articles: '/articles',
   },
   external: {
-    contactEmail: 'zhngjah3@outlook.com',
-    hiringEmail: 'sorasaku@cynara.my',
+    contactEmail: 'mhya123@mail.mistcraft.cn',
+    hiringEmail: 'mhya123@mail.mistcraft.cn',
     sponsorUrl: 'https://ifdian.net/a/cynara',
     bilibiliUrl: 'https://space.bilibili.com/3706979616819218',
     douyinUrl: 'https://v.douyin.com/J2-5jsN9okk/',
@@ -135,7 +133,7 @@ function normalizeRoute(route: unknown, fallback: string): string {
   return nextRoute.startsWith('/') ? nextRoute : `/${nextRoute}`;
 }
 
-function normalizeConfig(config: CynaraConfig): CynaraConfig {
+function normalizeConfig(config: MistCraftConfig): MistCraftConfig {
   return {
     ...config,
     site: {
@@ -169,9 +167,9 @@ function normalizeConfig(config: CynaraConfig): CynaraConfig {
   };
 }
 
-function loadCynaraConfig(): CynaraConfig {
+function loadMistCraftConfig(): MistCraftConfig {
   try {
-    const configPath = resolve(process.cwd(), 'cynara.config.yaml');
+    const configPath = resolve(process.cwd(), 'mistcraft.config.yaml');
     if (!existsSync(configPath)) {
       return normalizeConfig(defaultConfig);
     }
@@ -180,9 +178,9 @@ function loadCynaraConfig(): CynaraConfig {
     const parsedConfig = parse(rawConfig) ?? {};
     return normalizeConfig(mergeConfig(defaultConfig, parsedConfig));
   } catch (error) {
-    console.warn(`[cynara-config] Failed to read cynara.config.yaml: ${error instanceof Error ? error.message : String(error)}`);
+    console.warn(`[mistcraft-config] Failed to read mistcraft.config.yaml: ${error instanceof Error ? error.message : String(error)}`);
     return normalizeConfig(defaultConfig);
   }
 }
 
-export const cynaraConfig = loadCynaraConfig();
+export const mistcraftConfig = loadMistCraftConfig();

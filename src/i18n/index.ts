@@ -1,6 +1,6 @@
 import en from './en.json';
 import zh from './zh.json';
-import { cynaraConfig } from '../config/cynara';
+import { mistcraftConfig } from '../config/mistcraft';
 
 export const translations = {
   en,
@@ -16,7 +16,7 @@ export function isLocale(value: string | null | undefined): value is Locale {
 }
 
 export function getLocaleFromUrl(input: string | URL): Locale {
-  const url = typeof input === 'string' ? new URL(input, cynaraConfig.site.url) : input;
+  const url = typeof input === 'string' ? new URL(input, mistcraftConfig.site.url) : input;
   const path = url.pathname;
   if (path.startsWith('/en/') || path === '/en') {
     return 'en';

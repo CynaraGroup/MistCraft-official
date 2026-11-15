@@ -5,12 +5,16 @@ import robots from 'astro-robots';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import compress from '@playform/compress';
-import { cynaraConfig } from './scripts/load-cynara-config.mjs';
-import cynaraBuildAssets from './scripts/astro-build-assets.mjs';
+import { mistcraftConfig } from './scripts/load-mistcraft-config.mjs';
+import mistcraftBuildAssets from './scripts/astro-build-assets.mjs';
 import { remarkReadingTime } from './src/plugins/remark-reading-time.mjs';
 
 export default defineConfig({
-  site: cynaraConfig.site.url,
+  site: mistcraftConfig.site.url,
+  redirects: {
+    '/articles/cynara-members-archive': '/articles/mistcraft-members-archive',
+    '/en/articles/cynara-members-archive': '/en/articles/mistcraft-members-archive',
+  },
   server: {
     port: 8080,
     host: '127.0.0.1',
@@ -43,7 +47,7 @@ export default defineConfig({
         },
       ],
     }),
-    cynaraBuildAssets(),
+    mistcraftBuildAssets(),
     compress({
       CSS: true,
       HTML: true,

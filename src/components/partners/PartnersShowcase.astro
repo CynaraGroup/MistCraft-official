@@ -1,0 +1,73 @@
+---
+import { t, type Locale } from '../../i18n';
+import PartnerProfile from './PartnerProfile.astro';
+import '../../styles/partners.css';
+
+interface Props {
+  lang: Locale;
+  partners: { name: string; logo: string; url: string }[];
+  actionHref: string;
+  contactEmail: string;
+  page?: boolean;
+}
+
+const { lang, partners, actionHref, contactEmail, page = false } = Astro.props;
+const Heading = page ? 'h1' : 'h2';
+const ContactHeading = page ? 'h2' : 'h3';
+const titleId = page ? 'partners-title' : 'home-partners-title';
+const contactId = page ? 'partners-contact-title' : 'home-partners-contact-title';
+const copy = lang === 'zh'
+  ? {
+      intro: '感谢每一位伙伴的支持与陪伴。',
+      action: page ? '返回首页' : '查看全部',
+      directory: '合作伙伴与合作联系',
+      contactTitle: '交流合作',
+      contactDescription: '产品合作、内容交流，欢迎来信聊聊。',
+      contactAction: '发送合作邮件',
+      empty: '合作伙伴信息正在更新，欢迎联系我们。',
+      subject: '梦幻云创合作咨询',
+    }
+  : {
+      intro: 'Meet the partners growing with MistCraft.',
+      action: page ? 'Back to home' : 'View all',
+      directory: 'Partners and collaboration',
+      contactTitle: 'Work with us',
+      contactDescription: 'Have a product or content collaboration in mind? Get in touch.',
+      contactAction: 'Email us',
+      empty: 'Partner information is being updated. Feel free to get in touch.',
+      subject: 'MistCraft partnership inquiry',
+    };
+const contactHref = `mailto:${contactEmail}?subject=${encodeURIComponent(copy.subject)}`;
+---
+
+<div class="partners-showcase" transition:name="partners-showcase" transition:animate="initial">
+  <header class="partners-header">
+    <Heading class="partners-title" id={titleId}>{t(lang, 'partners.title')}</Heading>
+    <p>{copy.intro}</p>
+    <a href={actionHref} class="partners-action">
+      {page && <span aria-hidden="true">←</span>}
+      {copy.action}
+      {!page && <span aria-hidden="true">→</span>}
+    </a>
+  </header>
+
+  <section class="partners-directory" aria-label={copy.directory}>
+    <div class="partners-list" data-multiple={partners.length > 1 ? 'true' : undefined}>
+      {partners.length > 0 ? partners.map((partner, index) => (
+        <PartnerProfile partner={partner} lang={lang} compact={!page} priority={page && index === 0} />
+      )) : (
+        <p class="partners-empty">{copy.empty}</p>
+      )}
+    </div>
+
+    <aside class="partners-contact" aria-labelledby={contactId}>
+      <ContactHeading id={contactId}>{copy.contactTitle}</ContactHeading>
+      <p class="partners-contact-description">{copy.contactDescription}</p>
+      <a href={contactHref} class="partners-contact-link">
+        {copy.contactAction}
+        <span aria-hidden="true">↗</span>
+      </a>
+      <p class="partners-contact-address">{contactEmail}</p>
+    </aside>
+  </section>
+</div>

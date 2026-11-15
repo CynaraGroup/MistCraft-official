@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" fill="none" role="img" aria-labelledby="title description">
+  <title id="title">梦幻云图标</title>
+  <desc id="description">蓝紫渐变的云朵和星光，透明背景。</desc>
+  <defs>
+    <linearGradient id="cloud" x1="37" y1="118" x2="225" y2="218" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#39BDF8"/>
+      <stop offset="0.48" stop-color="#527AF3"/>
+      <stop offset="1" stop-color="#8455E8"/>
+    </linearGradient>
+    <linearGradient id="star" x1="202" y1="36" x2="224" y2="70" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#83DFFF"/>
+      <stop offset="1" stop-color="#548CF4"/>
+    </linearGradient>
+  </defs>
+  <path d="M69 214C41.938 214 20 192.062 20 165C20 140.494 37.989 120.185 61.48 116.562C67.711 91.018 90.742 72 118.2 72C148.295 72 173.068 94.844 176.116 124.124C178.992 123.387 182.007 123 185.1 123C210.45 123 231 143.55 231 168.9C231 194.25 210.45 214 185.1 214H69Z" fill="url(#cloud)"/>
+  <path d="M212 39C213.709 48.291 216.709 51.291 226 53C216.709 54.709 213.709 57.709 212 67C210.291 57.709 207.291 54.709 198 53C207.291 51.291 210.291 48.291 212 39Z" fill="url(#star)"/>
+  <circle cx="237" cy="87" r="4" fill="#9EACF9"/>
+</svg>

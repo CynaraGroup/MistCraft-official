@@ -1,0 +1,43 @@
+---
+import { t, type Locale } from '../../i18n';
+import { mistcraftConfig } from '../../config/mistcraft';
+import DouyinQrCode from '../DouyinQrCode.astro';
+import WeChatBadge from '../WeChatBadge.astro';
+import HomeAboutQrPreview from './HomeAboutQrPreview.astro';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+---
+
+<aside class="about-contact" aria-labelledby="about-social-title" data-about-social>
+  <h3 id="about-social-title">{t(lang, 'aboutSection.social').replace(/[：:]\s*$/, '')}</h3>
+
+  <div class="about-douyin">
+    <div>
+      <a href={mistcraftConfig.external.douyinUrl} target="_blank" rel="noopener noreferrer" class="about-social-link">
+        <span>{t(lang, 'aboutSection.socialDouyin')}</span>
+        <span aria-hidden="true">↗</span>
+      </a>
+      <p class="about-social-name">{lang === 'zh' ? '梦幻云创信息工作室' : 'MistCraft'}</p>
+      <p class="about-social-hint">{lang === 'zh' ? '记录创作，分享日常。' : 'Our work and everyday moments.'}</p>
+    </div>
+    <div data-about-qr>
+      <DouyinQrCode lang={lang} />
+    </div>
+  </div>
+
+  <div class="about-wechat">
+    <div class="about-wechat-label">
+      <h4>{lang === 'zh' ? '微信公众号' : 'WeChat'}</h4>
+      <span>{lang === 'zh' ? '搜一搜，找到我们' : 'Find and follow us'}</span>
+    </div>
+    <div class="about-wechat-image" data-about-qr>
+      <WeChatBadge lang={lang} />
+    </div>
+  </div>
+
+  <HomeAboutQrPreview lang={lang} />
+</aside>

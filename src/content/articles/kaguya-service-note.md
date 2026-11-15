@@ -2,7 +2,7 @@
 title: "关于 Kaguya 服务响应的说明"
 description: "对 Kaguya 相关服务支持节奏的简短说明。"
 pubDate: 2026-02-22
-author: "Cynara Team"
+author: "MistCraft Team"
 tags: ["Kaguya", "Notice", "Service"]
 ---
 

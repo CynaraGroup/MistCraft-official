@@ -1,0 +1,30 @@
+---
+import type { Locale } from '../i18n';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const imagePath = '/assets/images/wechat-mistcraft.png';
+const label = lang === 'zh' ? '点击放大微信二维码' : 'Enlarge the WeChat QR code';
+---
+
+<a
+  href={imagePath}
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label={label}
+  title={label}
+  class="block w-64 max-w-full rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+>
+  <img
+    src={imagePath}
+    alt={lang === 'zh' ? '微信搜一搜：梦幻云创' : 'Find MistCraft on WeChat'}
+    width="1710"
+    height="624"
+    loading="lazy"
+    decoding="async"
+    class="h-auto w-full rounded-lg"
+  />
+</a>

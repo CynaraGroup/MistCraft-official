@@ -3,10 +3,20 @@
     "name": "Account",
     "nameCn": "汐奈账号",
     "desc": "新一代统一身份认证中枢，为开发者与用户提供极致安全、现代化的授权与登录体验。",
-    "iconPath": "https://s.mahiro.work/d/cynara-oauth/logo.png?sign=4rG13MKO3GFZuczhQ-Jn9dZHE3eif1x-UmQJy3vN0RI=:0",
+    "iconPath": "/products/icons/account.svg",
     "imagePath": "/products/introduce/account.png",
     "links": [
         { "text": "立即接入", "url": "https://account.mahiro.work/" }
+    ]
+  },
+  {
+    "name": "梦幻云 - CraftYun",
+    "nameCn": "梦幻云",
+    "desc": "匠心筑云，连接无限。提供多种配置、灵活计费与自动部署的云产品，支持多个可用区域和多种网络线路接入，满足不同需求。",
+    "iconPath": "/products/icons/craftyun.svg",
+    "imagePath": "/products/introduce/craftyun.png",
+    "links": [
+        { "text": "访问官网", "url": "https://www.craftyun.ink/" }
     ]
   }
 ]

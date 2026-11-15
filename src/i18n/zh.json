@@ -11,7 +11,7 @@
   },
   "home": {
     "introTitle": "介绍",
-    "introDesc": "梦幻云创",
+    "introDesc": "梦幻云创（MistCraft）是一个专注于软件开发与数字产品的工作室。我们将技术与设计融入每一次创作，把想法打磨成简单、实用的工具与服务。保持好奇，关注体验，在持续探索中让创意落地。",
     "introDays": "我们已经来到这个世界 {days} 天了，但我们仍然年轻，仍然在成长。",
     "introTech": "科技",
     "introTechDesc": "前沿技术驱动创新",
@@ -23,7 +23,7 @@
     "introInnovationDesc": "持续突破，追求卓越"
   },
   "products": {
-    "title": "产品",
+    "title": "旗下产品",
     "entryBtn": "立即体验",
     "product1": {
       "name": "Layrain",

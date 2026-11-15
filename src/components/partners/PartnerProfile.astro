@@ -1,0 +1,207 @@
+---
+import type { Locale } from '../../i18n';
+
+interface Props {
+  partner: {
+    name: string;
+    logo: string;
+    url: string;
+  };
+  lang: Locale;
+  priority?: boolean;
+  compact?: boolean;
+}
+
+const { partner, lang, priority = false, compact = false } = Astro.props;
+const Heading = compact ? 'h3' : 'h2';
+let hostname = partner.url;
+try {
+  hostname = new URL(partner.url).hostname;
+} catch {
+  hostname = partner.url;
+}
+const visitLabel = lang === 'zh' ? '访问网站' : 'Visit website';
+const linkLabel = lang === 'zh'
+  ? `访问 ${partner.name}（在新标签页打开）`
+  : `Visit ${partner.name} (opens in a new tab)`;
+---
+
+<a
+  class:list={['partner-profile', { 'partner-profile--compact': compact }]}
+  href={partner.url}
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label={linkLabel}
+>
+  <div class="partner-profile-avatar">
+    <span class="partner-profile-fallback" aria-hidden="true">{partner.name.slice(0, 1)}</span>
+    <img
+      src={partner.logo}
+      alt=""
+      width="300"
+      height="300"
+      loading={priority ? 'eager' : 'lazy'}
+      fetchpriority={priority ? 'high' : 'auto'}
+      decoding="async"
+      onerror="this.setAttribute('hidden', '')"
+    />
+  </div>
+  <div class="partner-profile-content">
+    <Heading class="partner-profile-name">{partner.name}</Heading>
+    <p>{hostname}</p>
+    <span class="partner-profile-visit">
+      {visitLabel}
+      <span class="partner-profile-arrow" aria-hidden="true">↗</span>
+    </span>
+  </div>
+</a>
+
+<style>
+  .partner-profile {
+    display: grid;
+    grid-template-columns: 5rem minmax(0, 1fr);
+    align-items: center;
+    gap: 1.25rem;
+    min-width: 0;
+    min-height: 10rem;
+    padding: 1.25rem 1.5rem;
+    color: var(--partners-text);
+    text-decoration: none;
+    border-bottom: 1px solid var(--partners-border);
+    transition: background-color 180ms ease;
+  }
+
+  .partner-profile:last-child {
+    border-bottom: 0;
+  }
+
+  .partner-profile:hover {
+    background-color: rgb(245 247 251 / 0.035);
+    color: var(--partners-text);
+    opacity: 1;
+  }
+
+  .partner-profile:focus-visible {
+    outline: 3px solid var(--partners-accent);
+    outline-offset: -5px;
+    border-radius: 1.5rem;
+  }
+
+  .partner-profile-avatar {
+    position: relative;
+    display: grid;
+    place-items: center;
+    aspect-ratio: 1;
+    width: 100%;
+    overflow: hidden;
+    border: 1px solid var(--partners-border);
+    border-radius: 0.75rem;
+    background-color: rgb(255 255 255 / 0.08);
+  }
+
+  .partner-profile-fallback {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--partners-accent);
+  }
+
+  .partner-profile-avatar img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 220ms ease;
+  }
+
+  .partner-profile-avatar img[hidden] {
+    display: none;
+  }
+
+  .partner-profile-content {
+    min-width: 0;
+  }
+
+  .partner-profile-name {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 650;
+    line-height: 1.25;
+    letter-spacing: -0.035em;
+    overflow-wrap: anywhere;
+  }
+
+  .partner-profile-content p {
+    margin: 0.375rem 0 0.75rem;
+    color: var(--partners-muted);
+    font-size: 0.8125rem;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+  }
+
+  .partner-profile-visit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    min-height: 2.25rem;
+    padding: 0.45rem 0.75rem;
+    border: 1px solid var(--partners-border);
+    border-radius: 0.75rem;
+    background-color: rgb(245 247 251 / 0.045);
+    color: var(--partners-text);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: background-color 180ms ease, border-color 180ms ease;
+  }
+
+  .partner-profile-arrow {
+    font-size: 1.125rem;
+    line-height: 1;
+  }
+
+  .partner-profile:hover .partner-profile-visit,
+  .partner-profile:focus-visible .partner-profile-visit {
+    border-color: var(--partners-accent);
+    background-color: rgb(185 218 247 / 0.12);
+  }
+
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .partner-profile:hover .partner-profile-avatar img {
+      transform: scale(1.035);
+    }
+  }
+
+  @media (max-width: 767px) {
+    .partner-profile {
+      grid-template-columns: 3.5rem minmax(0, 1fr);
+      align-items: start;
+      justify-items: start;
+      gap: 1rem;
+      min-height: auto;
+      padding: 1.25rem;
+    }
+
+    .partner-profile-avatar {
+      width: 100%;
+    }
+
+    .partner-profile-name {
+      font-size: 1.125rem;
+    }
+
+    .partner-profile-content p {
+      margin-bottom: 0.75rem;
+    }
+
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .partner-profile,
+    .partner-profile-avatar img,
+    .partner-profile-visit {
+      transition: none;
+    }
+  }
+</style>

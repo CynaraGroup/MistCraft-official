@@ -1,0 +1,48 @@
+---
+import type { Locale } from '../i18n';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const replyEmails = [
+  'tuder1218@gmail.com',
+  'zhngjah3@outlook.com',
+  'mhyaaa123@outlook.com',
+];
+---
+
+<div class="email-reply-notice">
+  <p>{lang === 'zh' ? '你可能会收到以下邮箱的回复：' : 'You may receive replies from:'}</p>
+  <ul>
+    {replyEmails.map((email) => <li>{email}</li>)}
+  </ul>
+</div>
+
+<style>
+  .email-reply-notice {
+    margin-top: 0.75rem;
+    color: #d1d5db;
+    font-size: 0.75rem;
+    line-height: 1.75;
+  }
+
+  .email-reply-notice p {
+    margin: 0;
+  }
+
+  .email-reply-notice ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.125rem 0.875rem;
+    margin: 0.25rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .email-reply-notice li {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+</style>

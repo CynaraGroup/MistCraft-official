@@ -1,0 +1,35 @@
+---
+import type { Locale } from '../i18n';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const imagePath = '/assets/images/douyin-qrcode.png';
+const label = lang === 'zh' ? '点击放大抖音码' : 'Enlarge the Douyin code';
+---
+
+<figure class="w-36 max-w-full">
+  <a
+    href={imagePath}
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label={label}
+    title={label}
+    class="block overflow-hidden rounded-xl bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+  >
+    <img
+      src={imagePath}
+      alt={lang === 'zh' ? '梦幻云创信息工作室官方抖音码' : 'Official MistCraft Douyin code'}
+      width="736"
+      height="736"
+      loading="lazy"
+      decoding="async"
+      class="block h-auto w-full"
+    />
+  </a>
+  <figcaption class="mt-2 text-center text-xs text-gray-400">
+    {lang === 'zh' ? '打开抖音扫一扫' : 'Scan with Douyin'}
+  </figcaption>
+</figure>

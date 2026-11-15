@@ -2,7 +2,7 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import { getLocalizedUrl, t } from '../../../i18n';
-import { cynaraConfig } from '../../../config/cynara';
+import { mistcraftConfig } from '../../../config/mistcraft';
 
 interface Props {
   tag: string;
@@ -21,7 +21,7 @@ const { tag, articles, lang } = Astro.props;
 >
   <div class="relative z-10 max-w-4xl mx-auto px-5 py-20 pb-32 md:px-6 md:py-24">
     <div class="mb-9 md:mb-12">
-      <a href={getLocalizedUrl(cynaraConfig.routes.articles, lang)} class="mb-5 inline-flex text-sm font-semibold text-blue-200/80 hover:text-white">
+      <a href={getLocalizedUrl(mistcraftConfig.routes.articles, lang)} class="mb-5 inline-flex text-sm font-semibold text-blue-200/80 hover:text-white">
         ← {lang === 'zh' ? '返回文章列表' : 'Back to articles'}
       </a>
       <h1 class="text-3xl md:text-5xl font-bold text-white mb-4">

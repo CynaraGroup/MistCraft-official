@@ -19,18 +19,103 @@ const initialMinutes = Math.floor((initialDiff % (1000 * 60 * 60)) / (1000 * 60)
 const initialSeconds = Math.floor((initialDiff % (1000 * 60)) / 1000);
 ---
 
-<p class="text-gray-200" data-about-timer data-start-date={startDate}>
-  {t(lang, 'aboutSection.timelineStart')}
-  <span class="timer-value text-white font-bold mx-1" data-timer-part="days">{initialDays}</span>
-  {t(lang, 'aboutSection.timelineDays')}
-  <span class="timer-value text-white font-bold mx-1" data-timer-part="hours">{initialHours}</span>
-  {t(lang, 'aboutSection.timelineHours')}
-  <span class="timer-value text-white font-bold mx-1" data-timer-part="minutes">{initialMinutes}</span>
-  {t(lang, 'aboutSection.timelineMinutes')}
-  <span class="timer-value text-white font-bold mx-1" data-timer-part="seconds">{initialSeconds}</span>
-  {t(lang, 'aboutSection.timelineSeconds')}
-  {t(lang, 'aboutSection.timelineEnd')}
-</p>
+<div class="about-timer" data-about-timer data-start-date={startDate} role="group" aria-labelledby="about-timer-label">
+  <p id="about-timer-label" class="about-timer-label">{t(lang, 'aboutSection.timelineStart')}</p>
+  <dl class="about-timer-parts">
+    <div class="about-timer-part about-timer-days">
+      <dt>{t(lang, 'aboutSection.timelineDays')}</dt>
+      <dd data-timer-part="days">{initialDays}</dd>
+    </div>
+    <div class="about-timer-part">
+      <dt>{t(lang, 'aboutSection.timelineHours')}</dt>
+      <dd data-timer-part="hours">{String(initialHours).padStart(2, '0')}</dd>
+    </div>
+    <div class="about-timer-part">
+      <dt>{t(lang, 'aboutSection.timelineMinutes')}</dt>
+      <dd data-timer-part="minutes">{String(initialMinutes).padStart(2, '0')}</dd>
+    </div>
+    <div class="about-timer-part">
+      <dt>{t(lang, 'aboutSection.timelineSeconds')}</dt>
+      <dd data-timer-part="seconds">{String(initialSeconds).padStart(2, '0')}</dd>
+    </div>
+  </dl>
+</div>
+
+<style>
+  .about-timer {
+    padding-top: 1rem;
+    border-top: 1px solid var(--about-border, rgb(255 255 255 / 13%));
+  }
+
+  .about-timer-label {
+    color: var(--about-muted, #a8b3c0);
+    font-size: 0.8125rem;
+    line-height: 1.6;
+  }
+
+  .about-timer-parts {
+    display: grid;
+    grid-template-columns: minmax(7rem, 1.5fr) repeat(3, minmax(0, 1fr));
+    align-items: baseline;
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+  }
+
+  .about-timer-part {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .about-timer-part dt {
+    color: var(--about-muted, #a8b3c0);
+    font-size: 0.75rem;
+    line-height: 1.5;
+  }
+
+  .about-timer-part dd {
+    color: var(--about-text, #f2f5f7);
+    font-size: clamp(1.5rem, 2.4vw, 2.125rem);
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+  }
+
+  .about-timer-days dd {
+    color: var(--about-accent, #a6d9e8);
+    font-size: clamp(2.5rem, 4vw, 3.25rem);
+  }
+
+  .about-timer-days {
+    padding-right: 1rem;
+    border-right: 1px solid var(--about-border, rgb(255 255 255 / 13%));
+  }
+
+  @media (max-width: 767px) {
+    .about-timer-parts {
+      grid-template-columns: minmax(6.5rem, 1.7fr) repeat(3, minmax(0, 1fr));
+      gap: 0.5rem;
+    }
+
+    .about-timer-part dd {
+      font-size: 1.375rem;
+    }
+
+    .about-timer-part dt {
+      font-size: 0.6875rem;
+    }
+
+    .about-timer-days dd {
+      font-size: clamp(2rem, 9vw, 2.5rem);
+    }
+
+    .about-timer-days {
+      padding-right: 0.5rem;
+    }
+  }
+</style>
 
 <script>
   import dayjs from 'dayjs';
@@ -77,9 +162,9 @@ const initialSeconds = Math.floor((initialDiff % (1000 * 60)) / 1000);
           const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
           daysEl.textContent = String(days);
-          hoursEl.textContent = String(hours);
-          minutesEl.textContent = String(minutes);
-          secondsEl.textContent = String(seconds);
+          hoursEl.textContent = String(hours).padStart(2, '0');
+          minutesEl.textContent = String(minutes).padStart(2, '0');
+          secondsEl.textContent = String(seconds).padStart(2, '0');
         } catch (error) {
           console.error('About timer error:', error);
         }
