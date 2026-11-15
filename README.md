@@ -1,6 +1,6 @@
-# Cynara 官方网站
+# MistCraft 官方网站
 
-Cynara 官方网站与内容站点（Astro + Tailwind CSS + DaisyUI），包含首页展示、产品与合作伙伴信息、以及基于 Content Collections 的文章系统（支持 MD/MDX）。
+MistCraft 官方网站与内容站点（Astro + Tailwind CSS + DaisyUI），包含首页展示、产品与合作伙伴信息、以及基于 Content Collections 的文章系统（支持 MD/MDX）。
 
 ## 技术栈
 
