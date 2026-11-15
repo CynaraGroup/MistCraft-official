@@ -1,0 +1,19 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import ArticleDetail from '../../page-templates/articles/ArticleDetail.astro';
+
+export async function getStaticPaths() {
+  const articleEntries = await getCollection('articles');
+  return articleEntries.map((entry: CollectionEntry<'articles'>) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<'articles'>;
+}
+
+const { entry } = Astro.props;
+---
+<ArticleDetail lang="zh" entry={entry} />

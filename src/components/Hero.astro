@@ -1,0 +1,104 @@
+---
+const defaultLogo = '/assets/images/MistCraft-Line.svg';
+const mainlandLogo = '/assets/images/梦幻云创-Line.svg';
+---
+
+<section class="relative h-screen flex items-center justify-center overflow-hidden">
+  <div class="relative z-10 flex flex-col items-center justify-center px-6">
+    <img
+      id="hero-logo"
+      src={defaultLogo}
+      data-logo-default={defaultLogo}
+      data-logo-mainland={mainlandLogo}
+      alt="MistCraft"
+      class="w-64 sm:w-80 md:w-96 lg:w-[512px] h-auto filter drop-shadow-[0_0_30px_rgba(0,0,0,0.8)] drop-shadow-[0_0_60px_rgba(0,0,0,0.6)]"
+    />
+    <script is:inline>
+      (function () {
+        var logo = document.getElementById('hero-logo');
+        if (!logo) return;
+        var mainlandZones = ['Asia/Shanghai', 'Asia/Urumqi', 'Asia/Chongqing', 'Asia/Harbin', 'PRC'];
+        var timeZone = '';
+        try {
+          timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+        } catch (error) {}
+        if (mainlandZones.indexOf(timeZone) !== -1) {
+          logo.src = logo.getAttribute('data-logo-mainland');
+          logo.alt = '梦幻云创';
+        }
+      })();
+    </script>
+  </div>
+  
+  <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
+    <svg class="w-8 h-8 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+    </svg>
+  </div>
+</section>
+
+<script>
+  import gsap from "gsap";
+
+  const mainlandZones = ['Asia/Shanghai', 'Asia/Urumqi', 'Asia/Chongqing', 'Asia/Harbin', 'PRC'];
+
+  function applyRegionalLogo() {
+    const logo = document.querySelector<HTMLImageElement>('#hero-logo');
+    if (!logo) {
+      return;
+    }
+
+    const defaultLogo = logo.dataset.logoDefault;
+    const mainlandLogo = logo.dataset.logoMainland;
+    if (!defaultLogo || !mainlandLogo) {
+      return;
+    }
+
+    let timeZone = '';
+    try {
+      timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+    } catch (error) {}
+
+    const isMainland = mainlandZones.includes(timeZone);
+    const targetLogo = isMainland ? mainlandLogo : defaultLogo;
+
+    if (logo.getAttribute('src') !== targetLogo) {
+      logo.setAttribute('src', targetLogo);
+    }
+    logo.alt = isMainland ? '梦幻云创' : 'MistCraft';
+  }
+
+  function initHero() {
+    applyRegionalLogo();
+
+    const logo = document.getElementById('hero-logo');
+    if (!logo) {
+      return;
+    }
+
+    const onMouseMove = (e: MouseEvent) => {
+      const x = (e.clientX - window.innerWidth / 2) / 50;
+      const y = (e.clientY - window.innerHeight / 2) / 50;
+
+      gsap.to(logo, {
+        rotationY: x,
+        rotationX: -y,
+        transformPerspective: 1000,
+        ease: "power2.out",
+        duration: 0.5
+      });
+    };
+
+    document.addEventListener('mousemove', onMouseMove);
+
+    // 开局默认给一个浮动动画特效
+    gsap.from(logo, {
+      y: 30,
+      opacity: 0,
+      duration: 1.5,
+      ease: "power3.out"
+    });
+  }
+
+  document.addEventListener('astro:page-load', initHero);
+</script>

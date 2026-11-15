@@ -1,0 +1,34 @@
+---
+import { getCollection } from 'astro:content';
+import ArticleTag from '../../../../page-templates/articles/tag/ArticleTag.astro';
+
+export async function getStaticPaths() {
+  const allArticles = await getCollection('articles', ({ data }: any) => {
+    return import.meta.env.PROD ? data.draft !== true : true;
+  });
+
+  const tagSet = new Set<string>();
+  allArticles.forEach((article: any) => {
+    (article.data.tags ?? []).forEach((tag: string) => tagSet.add(tag));
+  });
+
+  return Array.from(tagSet).map((tag) => {
+    const filtered = allArticles
+      .filter((article: any) => (article.data.tags ?? []).includes(tag))
+      .sort((a: any, b: any) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+    return {
+      params: { tag },
+      props: { tag, articles: filtered },
+    };
+  });
+}
+
+interface Props {
+  tag: string;
+  articles: any[];
+}
+
+const { tag, articles } = Astro.props;
+---
+<ArticleTag lang="en" tag={tag} articles={articles} />
