@@ -18,5 +18,15 @@
     "links": [
         { "text": "Visit Website", "url": "https://www.craftyun.ink/" }
     ]
+  },
+  {
+    "name": "NexFrp",
+    "nameEn": "NexFrp",
+    "desc": "A simple, reliable tunneling service that works without a public IP. Supports TCP, UDP, HTTP, and HTTPS for game hosting, remote access, and local development.",
+    "iconPath": "/products/icons/nexfrp.svg",
+    "imagePath": "/products/introduce/nexfrp-homepage.png",
+    "links": [
+        { "text": "Visit Website", "url": "https://nexfrp.craftyun.ink/" }
+    ]
   }
 ]

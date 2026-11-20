@@ -5,6 +5,7 @@ import { mistcraftConfig } from '../../config/mistcraft';
 import HomeAboutContact from './HomeAboutContact.astro';
 import HomeAboutLinks from './HomeAboutLinks.astro';
 import EmailReplyNotice from '../EmailReplyNotice.astro';
+import IcpFiling from '../IcpFiling.astro';
 import '../../styles/home-about.css';
 
 interface Props {
@@ -57,6 +58,7 @@ const prideEggUrl = getLocalizedUrl('/cloud', lang);
           <span></span>
         </a>
       </p>
+      <IcpFiling />
     </footer>
   </div>
 </section>

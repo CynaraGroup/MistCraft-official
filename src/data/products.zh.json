@@ -18,5 +18,15 @@
     "links": [
         { "text": "访问官网", "url": "https://www.craftyun.ink/" }
     ]
+  },
+  {
+    "name": "NexFrp",
+    "nameCn": "NexFrp 内网穿透",
+    "desc": "简单稳定的内网穿透服务，无需公网 IP，支持 TCP、UDP、HTTP 与 HTTPS，适用于游戏联机、远程访问和本地开发调试。",
+    "iconPath": "/products/icons/nexfrp.svg",
+    "imagePath": "/products/introduce/nexfrp-homepage.png",
+    "links": [
+        { "text": "访问官网", "url": "https://nexfrp.craftyun.ink/" }
+    ]
   }
 ]

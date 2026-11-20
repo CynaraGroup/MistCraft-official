@@ -2,6 +2,7 @@
 import { t, getLocalizedUrl, type Locale } from '../i18n';
 import { mistcraftConfig } from '../config/mistcraft';
 import WeChatBadge from './WeChatBadge.astro';
+import IcpFiling from './IcpFiling.astro';
 
 interface Props {
   lang: Locale;
@@ -46,5 +47,6 @@ const homeRoute = getLocalizedUrl(mistcraftConfig.routes.home, lang);
     <div class="mt-12 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
       <p class="text-sm text-gray-500">{t(lang, 'footer.copyright')}</p>
     </div>
+    <IcpFiling />
   </div>
 </footer>
